@@ -4,6 +4,9 @@
 
 DocuWare is a document intelligence application built with Java 21 and Spring Boot 3.5. It includes a responsive browser frontend, authenticated document management, asynchronous text extraction, and optional local AI through Ollama. PostgreSQL with pgvector stores structured data and embeddings; the original uploaded files live on the local filesystem.
 
+<img width="1536" height="1024" alt="Untitled design" src="https://github.com/user-attachments/assets/2e290246-2a27-4e29-bf4b-effdf6bb3405" />
+
+
 ## Features
 
 - Register and sign in with BCrypt password hashing and expiring JWT access tokens.
