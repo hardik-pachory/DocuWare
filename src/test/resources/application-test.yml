@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:docuware;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+app:
+  jwt-secret: test-only-secret-with-more-than-thirty-two-bytes
+  processing-enabled: false
+  ai:
+    enabled: false

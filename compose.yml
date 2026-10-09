@@ -1,0 +1,43 @@
+name: docuware
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-docuware}
+      POSTGRES_USER: ${DATABASE_USER:-docuware}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?Set DATABASE_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  app:
+    build: .
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/${DATABASE_NAME:-docuware}
+      DATABASE_USER: ${DATABASE_USER:-docuware}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:?Set DATABASE_PASSWORD in .env}
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
+      STORAGE_ROOT: /app/data/documents
+      AI_ENABLED: ${AI_ENABLED:-false}
+      AI_BASE_URL: ${AI_BASE_URL:-http://host.docker.internal:11434}
+      AI_EMBEDDING_MODEL: ${AI_EMBEDDING_MODEL:-nomic-embed-text}
+      AI_CHAT_MODEL: ${AI_CHAT_MODEL:-llama3.2}
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - document-data:/app/data/documents
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres:
+        condition: service_healthy
+volumes:
+  postgres-data:
+    name: ${POSTGRES_VOLUME_NAME:-docuware_postgres-data}
+  document-data:
+    name: ${DOCUMENT_VOLUME_NAME:-docuware_document-data}

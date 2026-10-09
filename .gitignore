@@ -1,0 +1,51 @@
+# Maven outputs and project-local dependency cache
+/target/
+/.m2/
+*.class
+
+# Uploaded documents and local backups
+/data/
+/backups/
+*.dump
+
+# Local environment and secrets; commit sanitized examples
+.env
+.env.*
+!.env.example
+!.env.*.example
+/secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+
+# Logs and JVM crash reports
+*.log
+hs_err_pid*
+replay_pid*
+
+# IDE and editor settings
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+/out/
+/bin/
+
+# Python caches / virtual environments for diagram utilities
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Keep docs diagrams and SQL migrations versioned.

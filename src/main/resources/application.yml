@@ -1,0 +1,46 @@
+spring:
+  config:
+    import: "optional:file:./.env[.properties]"
+  application:
+    name: docuware
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/docuware}
+    username: ${DATABASE_USER:docuware}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 21MB
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+server:
+  error:
+    include-message: never
+  shutdown: graceful
+app:
+  jwt-secret: ${JWT_SECRET}
+  jwt-ttl: PT1H
+  storage-root: ${STORAGE_ROOT:./data/documents}
+  processing-delay-ms: 3000
+  processing-enabled: true
+  ai:
+    enabled: ${AI_ENABLED:false}
+    base-url: ${AI_BASE_URL:http://localhost:11434}
+    embedding-model: ${AI_EMBEDDING_MODEL:nomic-embed-text}
+    chat-model: ${AI_CHAT_MODEL:llama3.2}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
